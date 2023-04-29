@@ -69,7 +69,30 @@ The Analysis of Variance presented here demonstrates the probability of the two-
 
 ## Pike
 
+```{r}
+Pike <- filter(Fish, Species=="Pike")
+Pike <- select(Pike, -(Species))
+```
+
 ### Best Models
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = Pike,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+library(car)
+subsets(regsubsets.out,statistic="adjr2",legend="topleft",main="Adjusted R^2")
+```
+
+The r command responses display the optimal model for predicting the weight of Pike fish based on the data used. The subset size constitutes the x-axis, and the adjusted R-squared value forms the y-axis. The legend conveys the significance of the highest plot, "L1-L2-L3-H-W." The plot's importance is highlighted by its position as the best model for predicting Pike weight, which is why it is placed above the others. The adjusted R-squared value associated with this model is 0.975.
 
 ### Best Two regressor model
 
