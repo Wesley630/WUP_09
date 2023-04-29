@@ -105,8 +105,28 @@ Pike_best_2_R_Model <-lm(Weight~Length1+Length3, data=Pike)
 The ANOVA output generates the analysis we require to scrutinize our hypothesis. Through employing ANOVA, we determine that the p-value is 0.03091, making it significant since it falls below the 0.05 threshold. The ANOVA output compares the optimal model with the two-element model, which explains why Model 1 encompasses all elements for predicting Pike weight, and Model 2 only contains two elements for prediction purposes.
 
 ## Roach
+```{r}
+Roach <- filter(Fish, Species=="Roach")
+Roach <- select(Roach, -(Species))
+```
 
 ### Best Models
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = Roach,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+library(car)
+subsets(regsubsets.out,statistic="adjr2",legend="bottomleft",main="Adjusted R^2")
+```
+We acquired the data for this fish from the files, and the r command generated the optimal prediction approach. The graph concurs that the best model is the two-element model, as it surpasses the other models. This finding resembles the Perch results, where the top model is also a two-element model. In this particular graph, the highest-ranking one-element model is above 1, the best two-element model is above 2, the best three-element model is above 3, and so forth.
 
 ### Best Two regressor model
 
