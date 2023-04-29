@@ -96,6 +96,14 @@ The r command responses display the optimal model for predicting the weight of P
 
 ### Best Two regressor model
 
+```{r}
+Pike_best.model <- lm(Weight~.,data=Pike)
+summary(Pike_best.model)
+Pike_best_2_R_Model <-lm(Weight~Length1+Length3, data=Pike)
+``` 
+
+The ANOVA output generates the analysis we require to scrutinize our hypothesis. Through employing ANOVA, we determine that the p-value is 0.03091, making it significant since it falls below the 0.05 threshold. The ANOVA output compares the optimal model with the two-element model, which explains why Model 1 encompasses all elements for predicting Pike weight, and Model 2 only contains two elements for prediction purposes.
+
 ## Roach
 
 ### Best Models
