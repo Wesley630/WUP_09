@@ -59,6 +59,14 @@ summary(best.model)
 The models shown above are designed using the r command to explain how to predict the weight of a Perch fish. The first graph reveals that the most suitable model for this fish is also the top two-regressor model. We then move on to the "Best Two Regressor Model" command and identify that the two-component model employs the statistical variations between the factors that contribute to predicting the weight of a Perch fish. This is the reason height and width appear at the top of the initial command. The adjusted r-square value stands at 0.940 on the y-axis, while the most fitting and best two-regressor model is plotted at the second x-axis value.
 
 
+```{r}
+best_Perch_Model <- lm(Weight~Height+Width,data=Perch)
+five_element_perch_model <- lm(Weight~.,data=Perch)
+anova(best_Perch_Model, five_element_perch_model)
+```
+
+The Analysis of Variance presented here demonstrates the probability of the two-element model being significant. This is why the difference in RSS values between the two-element model and the five-element model is minimal. Model 1, derived from height and width, has an RSS value of 384,478, while Model 2, which takes into account Length1, Length2, Length3, Height, and Width, has an RSS value of 379,369.
+
 ## Pike
 
 ### Best Models
