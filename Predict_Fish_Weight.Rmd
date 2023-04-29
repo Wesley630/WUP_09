@@ -129,5 +129,21 @@ subsets(regsubsets.out,statistic="adjr2",legend="bottomleft",main="Adjusted R^2"
 We acquired the data for this fish from the files, and the r command generated the optimal prediction approach. The graph concurs that the best model is the two-element model, as it surpasses the other models. This finding resembles the Perch results, where the top model is also a two-element model. In this particular graph, the highest-ranking one-element model is above 1, the best two-element model is above 2, the best three-element model is above 3, and so forth.
 
 ### Best Two regressor model
+```{r}
+Roach_best_model <- lm(Weight~Length3+Width,data=Roach)
+summary(Roach_best_model)
+```
+
+Just like with the Perch, the approaches for predicting weight for Roach fish are displayed above. The generated table showcases the primary factors for predicting weight, namely Length3 and Width. As the best model is the optimal two-element model, we will consistently use these two elements, Length3 and Width, for Roach weight prediction. This explains why Length3 and Width are positioned at the top of the first command. The adjusted R-squared value is the greatest on the y-axis, and the best two-regressor model is plotted accordingly for the 2nd value of the x-axis.
+
+```{r}
+Roach_best_model <- lm(Weight~Length3+Width,data=Roach)
+five_element_Roach_model <- lm(Weight~.,data=Roach)
+anova(Roach_best_model, five_element_Roach_model)
+```
+
+The Analysis of Variance reveals that there is no substantial difference when comparing the two models. This is the reason why there's only a small difference in the RSS values when comparing them to a five-element model. In Model 1, using Length3 and Width, the RSS value is 20368, whereas Model 2, which includes Length1, Length2, Length3, Height, and Width, has an RSS value of 19771.
+
+
 
 ## Final Summary Statements
