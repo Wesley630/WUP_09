@@ -25,11 +25,11 @@ fish <-read.csv(file="Fish.csv",header=TRUE)
 ```
 
 ## Perch
-
 ```{r}
-Perch <- filter(Fish, Species=="Perch")
+Perch <- filter(fish, Species=="Perch")
 Perch <- select(Perch, -(Species))
 ```
+
 
 ### Best Models
 
@@ -70,7 +70,7 @@ The Analysis of Variance presented here demonstrates the probability of the two-
 ## Pike
 
 ```{r}
-Pike <- filter(Fish, Species=="Pike")
+Pike <- filter(fish, Species=="Pike")
 Pike <- select(Pike, -(Species))
 ```
 
@@ -102,11 +102,20 @@ summary(Pike_best.model)
 Pike_best_2_R_Model <-lm(Weight~Length1+Length3, data=Pike)
 ``` 
 
+This r code generates multiple models using an automated process. The factors constituting the two-element model and the five-element model are displayed in the table. When comparing the two-element model to the five-element model, the two-element model has a lower likelihood of accurately predicting the weight of a Pike fish.
+
+```{r}
+Pike_best.model <- lm(Weight~.,data=Pike)
+Pike_best_2_R_Model <-lm(Weight~Length1+Length3, data=Pike)
+anova(Pike_best.model, Pike_best_2_R_Model)
+```
+
+
 The ANOVA output generates the analysis we require to scrutinize our hypothesis. Through employing ANOVA, we determine that the p-value is 0.03091, making it significant since it falls below the 0.05 threshold. The ANOVA output compares the optimal model with the two-element model, which explains why Model 1 encompasses all elements for predicting Pike weight, and Model 2 only contains two elements for prediction purposes.
 
 ## Roach
 ```{r}
-Roach <- filter(Fish, Species=="Roach")
+Roach <- filter(fish, Species=="Roach")
 Roach <- select(Roach, -(Species))
 ```
 
@@ -126,7 +135,9 @@ as.data.frame(summary.out$outmat)
 library(car)
 subsets(regsubsets.out,statistic="adjr2",legend="bottomleft",main="Adjusted R^2")
 ```
-We acquired the data for this fish from the files, and the r command generated the optimal prediction approach. The graph concurs that the best model is the two-element model, as it surpasses the other models. This finding resembles the Perch results, where the top model is also a two-element model. In this particular graph, the highest-ranking one-element model is above 1, the best two-element model is above 2, the best three-element model is above 3, and so forth.
+
+
+   We acquired the data for this fish from the files, and the r command generated the optimal prediction approach. The graph concurs that the best model is the two-element model, as it surpasses the other models. This finding resembles the Perch results, where the top model is also a two-element model. In this particular graph, the highest-ranking one-element model is above 1, the best two-element model is above 2, the best three-element model is above 3, and so forth.
 
 ### Best Two regressor model
 ```{r}
@@ -146,7 +157,5 @@ The Analysis of Variance reveals that there is no substantial difference when co
 
 
 ## Final Summary Statements
-predicting the weight of fish involves considering numerous factors. In certain cases, using fewer factors can be more effective and preferable compared to other situations. For example, at the beginning of this exercise, we examined the Perch data to identify the best method for predicting their weight. The automated responses informed us about the best model and the best two-regressor model, and when conducting the ANOVA test with these results, the outcomes were noteworthy. The favored approach for predicting Perch weight involved using a two-element model, as there was no significant difference between the two-element and five-element models.
-Next, we analyzed the Pike data to determine the optimal way to predict their weight. The automatically generated responses guided us to the best model, best two-regressor model, and when running the ANOVA test with these results, the outcomes were significant. By using ANOVA, we discovered that the p-value was 0.03091 and concluded that it was significant below the 0.05 level, indicating that the five-element model had a significantly lower RSS score than the two-element model.
-Finally, for the Roach fish, we explored the Roach data to find the most effective method for predicting their weight. Similar to the first fish, the automated responses advised us about the best model, best two-regressor model, and when performing the ANOVA test with these results, the outcomes were notable. The preferred method for predicting Roach weight also involved using a two-element model, as there was no significant difference between the two-element and five-element models.
 
+Predicting fish weight involves considering various factors, and sometimes, fewer factors are preferred. For Perch, the best prediction method used a two-element model, as there was no significant difference compared to a five-element model. For Pike, the ANOVA test showed a significant p-value of 0.03091, favoring the five-element model with a lower RSS score than the two-element model. Finally, for Roach, like Perch, the preferred method used a two-element model, as there was no significant difference compared to the five-element model.
